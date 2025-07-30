@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BusinessTracker API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        button { padding: 10px 20px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>BusinessTracker API Test</h1>
+    
+    <h2>Backend Status</h2>
+    <button onclick="testHealth()">Test Health Check</button>
+    <div id="health-result"></div>
+    
+    <h2>DateTime Format Test</h2>
+    <button onclick="testDateTime()">Test Add Expense (DateTime)</button>
+    <div id="datetime-result"></div>
+    
+    <h2>Get Expenses</h2>
+    <button onclick="getExpenses()">Get All Expenses</button>
+    <div id="expenses-result"></div>
+
+    <script>
+        const API_BASE = 'http://localhost:8080/api';
+        
+        async function testHealth() {
+            const resultDiv = document.getElementById('health-result');
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                resultDiv.innerHTML = `<div class="test-result success">✅ Health Check OK: ${JSON.stringify(data)}</div>`;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result error">❌ Health Check Failed: ${error.message}</div>`;
+            }
+        }
+        
+        async function testDateTime() {
+            const resultDiv = document.getElementById('datetime-result');
+            try {
+                // Vereinfachtes DateTime Format: nur Jahr-Monat-Tag-Stunde
+                const now = new Date();
+                const year = now.getFullYear().toString().padStart(4, '0');
+                const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                const day = now.getDate().toString().padStart(2, '0');
+                const hour = now.getHours().toString().padStart(2, '0');
+                const formattedDate = `${year}-${month}-${day}T${hour}:00:00`;
+                
+                const testExpense = {
+                    title: "DateTime Test Expense",
+                    amount: 99.99,
+                    category: "OFFICE",
+                    expenseDate: formattedDate,
+                    description: "Test für vereinfachtes DateTime-Format"
+                };
+                
+                console.log('Sending expense with date:', formattedDate);
+                
+                const response = await fetch(`${API_BASE}/expenses`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testExpense)
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `<div class="test-result success">✅ DateTime Test OK: ${JSON.stringify(data)}</div>`;
+                } else {
+                    const errorText = await response.text();
+                    resultDiv.innerHTML = `<div class="test-result error">❌ DateTime Test Failed (${response.status}): ${errorText}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result error">❌ DateTime Test Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function getExpenses() {
+            const resultDiv = document.getElementById('expenses-result');
+            try {
+                const response = await fetch(`${API_BASE}/expenses`);
+                const data = await response.json();
+                resultDiv.innerHTML = `<div class="test-result success">✅ Got ${data.length} expenses: ${JSON.stringify(data, null, 2)}</div>`;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result error">❌ Get Expenses Failed: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

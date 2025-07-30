@@ -1,0 +1,229 @@
+# ===================================
+# BusinessExpensesTracker Repository
+# Haupt-.gitignore für Multi-Projekt
+# ===================================
+
+# =====================================
+# ALLGEMEINE ENTWICKLUNGSUMGEBUNG
+# =====================================
+
+# IDE und Editor Dateien
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Betriebssystem spezifische Dateien
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Temporäre Dateien
+*.tmp
+*.temp
+*.log
+*.pid
+*.seed
+*.lock
+
+# =====================================
+# FLUTTER FRONTEND (business_tracker_app)
+# =====================================
+
+# Flutter/Dart generierte Dateien
+business_tracker_app/.dart_tool/
+business_tracker_app/.packages
+business_tracker_app/.pub-cache/
+business_tracker_app/.pub/
+business_tracker_app/build/
+business_tracker_app/.flutter-plugins
+business_tracker_app/.flutter-plugins-dependencies
+business_tracker_app/.metadata
+
+# Flutter Web
+business_tracker_app/web/flutter_service_worker.js
+business_tracker_app/web/main.dart.js
+business_tracker_app/web/main.dart.js.map
+
+# Flutter iOS
+business_tracker_app/ios/Runner.xcworkspace/xcuserdata/
+business_tracker_app/ios/Runner/GeneratedPluginRegistrant.*
+business_tracker_app/ios/.symlinks/
+business_tracker_app/ios/Flutter/flutter_export_environment.sh
+business_tracker_app/ios/Flutter/Generated.xcconfig
+business_tracker_app/ios/Flutter/App.framework
+business_tracker_app/ios/Flutter/Flutter.framework
+business_tracker_app/ios/Flutter/Flutter.podspec
+
+# Flutter Android
+business_tracker_app/android/app/debug/
+business_tracker_app/android/app/profile/
+business_tracker_app/android/app/release/
+business_tracker_app/android/.gradle/
+business_tracker_app/android/captures/
+business_tracker_app/android/gradle/
+business_tracker_app/android/gradlew
+business_tracker_app/android/gradlew.bat
+business_tracker_app/android/local.properties
+business_tracker_app/android/app/src/main/java/**/GeneratedPluginRegistrant.java
+
+# Flutter Windows
+business_tracker_app/windows/flutter/generated_plugin_registrant.cc
+business_tracker_app/windows/flutter/generated_plugin_registrant.h
+business_tracker_app/windows/flutter/generated_plugins.cmake
+
+# Flutter Linux
+business_tracker_app/linux/flutter/generated_plugin_registrant.cc
+business_tracker_app/linux/flutter/generated_plugin_registrant.h
+business_tracker_app/linux/flutter/generated_plugins.cmake
+
+# Flutter macOS
+business_tracker_app/macos/Flutter/GeneratedPluginRegistrant.swift
+business_tracker_app/macos/Flutter/Flutter-Debug.xcconfig
+business_tracker_app/macos/Flutter/Flutter-Release.xcconfig
+
+# =====================================
+# SPRING BOOT BACKEND (business_tracker_backend)
+# =====================================
+
+# Maven
+business_tracker_backend/target/
+business_tracker_backend/pom.xml.tag
+business_tracker_backend/pom.xml.releaseBackup
+business_tracker_backend/pom.xml.versionsBackup
+business_tracker_backend/pom.xml.next
+business_tracker_backend/release.properties
+business_tracker_backend/dependency-reduced-pom.xml
+business_tracker_backend/buildNumber.properties
+business_tracker_backend/.mvn/timing.properties
+business_tracker_backend/.mvn/wrapper/maven-wrapper.jar
+
+# Spring Boot
+business_tracker_backend/*.jar
+business_tracker_backend/*.war
+business_tracker_backend/*.ear
+business_tracker_backend/*.zip
+business_tracker_backend/*.tar.gz
+business_tracker_backend/*.rar
+
+# Spring Boot Logs
+business_tracker_backend/logs/
+business_tracker_backend/spring.log
+
+# H2 Database Dateien
+business_tracker_backend/*.db
+business_tracker_backend/*.mv.db
+business_tracker_backend/*.trace.db
+
+# Java kompilierte Klassen
+business_tracker_backend/**/*.class
+
+# =====================================
+# DOKUMENTATION UND BACKUP
+# =====================================
+
+# Dokumentationsstruktur (automatisch generiert)
+struktur.txt
+PROJEKT_OVERVIEW.md
+
+# Backup Dateien
+*.bak
+*.backup
+*.old
+
+# Office temporäre Dateien
+~$*.docx
+~$*.xlsx
+~$*.pptx
+
+# =====================================
+# UMGEBUNGSSPEZIFISCHE DATEIEN
+# =====================================
+
+# Umgebungsvariablen
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# API Keys und Secrets
+**/secrets.json
+**/config/secrets/
+**/.secrets/
+
+# =====================================
+# BUILD UND CACHE ORDNER
+# =====================================
+
+# Allgemeine Build Ordner
+dist/
+out/
+build/
+target/
+
+# Node modules (falls jemals verwendet)
+node_modules/
+
+# =====================================
+# ENTWICKLUNGSTOOLS
+# =====================================
+
+# Coverage Reports
+coverage/
+*.lcov
+
+# Test Results
+test-results/
+junit.xml
+
+# Profiling
+*.prof
+
+# =====================================
+# HINWEISE FÜR ENTWICKLER
+# =====================================
+
+# Diese .gitignore deckt das gesamte BusinessExpensesTracker Repository ab
+# Zusätzliche projektspezifische .gitignore Dateien befinden sich in:
+# - business_tracker_app/.gitignore (Flutter spezifisch)
+# - business_tracker_app/android/.gitignore (Android spezifisch)
+# - business_tracker_app/ios/.gitignore (iOS spezifisch)
+# - business_tracker_app/windows/.gitignore (Windows spezifisch)
+# - business_tracker_app/linux/.gitignore (Linux spezifisch)
+# - business_tracker_app/macos/.gitignore (macOS spezifisch)
+
+
+# =====================================
+# Die .gitignore Struktur:
+# =====================================
+# Haupt-.gitignore (.gitignore)
+# Zweck: Übergeordnete Regeln für das gesamte Repository
+# Abdeckung: Beide Projekte (Frontend + Backend), IDE-Dateien, OS-Dateien
+# Vorteil: Zentrale Verwaltung gemeinsamer Ignores
+
+# Flutter-.gitignore (.gitignore)
+# Zweck: Flutter/Dart spezifische Dateien
+# Abdeckung: Build-Artefakte, generierte Dateien, Platform-spezifische Builds
+# Erweitert: Um moderne Flutter Ignores ergänzt
+
+# Backend-.gitignore (.gitignore)
+# Zweck: Spring Boot/Maven spezifische Dateien
+# Abdeckung: Target-Ordner, JAR-Dateien, H2-Database, IDE-Dateien
+# Neu erstellt: War vorher nicht vorhanden
+
+# Platform-.gitignore (android, ios, windows, etc.)
+# Zweck: Platform-spezifische Build-Artefakte
+# Status: Bleiben unverändert (von Flutter generiert)
+
+# Vorteile dieser Struktur:
+# Hierarchisch: Haupt-.gitignore fängt übergeordnete Dateien ab
+# Spezifisch: Projekt-spezifische .gitignore für Details
+# Wartungsfreundlich: Klare Trennung der Verantwortlichkeiten
+# GitHub-Ready: Optimiert für Multi-Projekt Repositories

@@ -1,0 +1,26 @@
+1. Health-Check:
+http://localhost:8080/api/health
+
+2. H2-Database Console:
+http://localhost:8080/api/h2-console
+
+Login-Daten:
+JDBC URL: jdbc:h2:mem:businesstracker
+User Name: sa
+Password: (leer lassen)
+
+3. In H2-Console solltest du sehen:
+Table "EXPENSES" in der linken Sidebar
+Spalten: ID, TITLE, AMOUNT, CATEGORY, EXPENSE_DATE, etc.
+
+🎯 Status Check:
+✅ BUILD SUCCESS (Kompilierung OK) 
+🔄 App starten mit mvn spring-boot:run 
+🔄 Server-Start prüfen (Spring Boot Logo) 
+🔄 Endpoints testen (/api/health) 
+🔄 Database prüfen (H2-Console)
+
+💡 Maven-Befehle Unterschied:
+mvn clean compile      # Nur kompilieren (BUILD SUCCESS)
+mvn clean install      # Kompilieren + JAR erstellen
+mvn spring-boot:run     # Kompilieren + App starten (das willst du!)
