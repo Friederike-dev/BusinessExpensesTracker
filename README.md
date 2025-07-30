@@ -136,6 +136,11 @@ cd business_tracker_backend
 mvn clean install
 mvn spring-boot:run
 ```
+**Alternative (if above doesn't work):**
+```bash
+mvn clean package
+java -jar target/business-tracker-api-1.0.0.jar
+```
 Backend will be available at: `http://localhost:8080`
 
 ### 3. Start the Frontend
@@ -163,7 +168,7 @@ API Endpoints
 | `GET` | `/api/expenses/stats/yearly` | Yearly statistics |
 
 
-Testing
+## Testing
 
 ### Backend Tests
 ```bash
@@ -176,6 +181,7 @@ mvn test
 cd business_tracker_app
 flutter test
 ```
+**Note:** Default widget tests may need updating to match the current app structure.
 
 Platform Support
 
