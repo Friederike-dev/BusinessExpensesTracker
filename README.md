@@ -1,5 +1,5 @@
 # Business Expense Tracker
-A comprehensive full-stack application for tracking expenses.
+A comprehensive full-stack application for tracking and managing business expenses with real-time statistics and multi-platform support.
 
 ### Architecture & Design Patterns
 - **MVC Pattern** in Spring Boot backend
@@ -25,7 +25,6 @@ A comprehensive full-stack application for tracking expenses.
 - **Cross-Platform Development:** Support for 6+ platforms
 - **Modern Architecture:** Clean separation of concernsess Expense Tracker
 
-A comprehensive full-stack application for tracking and managing business expenses with real-time statistics and multi-platform support.
 
 Features
 Frontend (Flutter)
