@@ -1,6 +1,5 @@
 # Business Expense Tracker
-
-A comprehensive full-stack application for tracking and## 🎓 **Technical Highlights**
+A comprehensive full-stack application for tracking expenses.
 
 ### Architecture & Design Patterns
 - **MVC Pattern** in Spring Boot backend
@@ -181,7 +180,6 @@ mvn test
 cd business_tracker_app
 flutter test
 ```
-**Note:** Default widget tests may need updating to match the current app structure.
 
 Platform Support
 
