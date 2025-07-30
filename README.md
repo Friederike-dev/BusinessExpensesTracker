@@ -1,6 +1,8 @@
 # Business Expense Tracker
 A comprehensive full-stack application for tracking and managing business expenses with real-time statistics and multi-platform support.
 
+**Note:** C++, CMake, and Swift files are auto-generated Flutter platform code for cross-platform deployment. The core application is built with Dart (Flutter frontend) and Java (Spring Boot backend).
+
 ### Architecture & Design Patterns
 - **MVC Pattern** in Spring Boot backend
 - **Provider Pattern** for Flutter state management
