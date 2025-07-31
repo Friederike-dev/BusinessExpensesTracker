@@ -13,7 +13,7 @@
         <relativePath/>
     </parent>
     
-    <!-- Angepasst auf dein Package -->
+
     <groupId>com.adlibita</groupId>
     <artifactId>business-tracker-api</artifactId>
     <version>1.0.0</version>
