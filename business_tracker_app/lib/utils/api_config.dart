@@ -19,6 +19,11 @@ class ApiConfig {
         print('API Base URL: http://10.0.2.2:8080/api');
         return 'http://10.0.2.2:8080/api';
       }
+      if (Platform.isIOS) {
+        print('Platform: iOS');
+        // TODO: Set your MacBook's IP here for local testing
+        return 'http://<YOUR_LOCAL_IP>:8080/api';
+      }
     } catch (e) {
       // Platform.isAndroid wirft Exception bei Web
       // Fallback zu localhost für andere Plattformen
