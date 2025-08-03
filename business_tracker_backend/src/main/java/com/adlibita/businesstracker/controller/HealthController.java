@@ -24,6 +24,7 @@ public class HealthController {
     public Map<String, Object> health() {
         // Map<String, Object>: Wird automatisch zu JSON konvertiert
         Map<String, Object> response = new HashMap<>();
+        response.put("success", true); // Hinzufügen des success-Flags
         response.put("status", "UP");
         response.put("timestamp", LocalDateTime.now());
         response.put("message", "BusinessTracker API is running successfully!");

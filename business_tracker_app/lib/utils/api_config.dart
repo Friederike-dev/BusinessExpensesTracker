@@ -7,20 +7,34 @@ class ApiConfig {
   static String get baseUrl {
     // Für Web: kIsWeb = true → kein Platform.isAndroid verfügbar
     if (kIsWeb) {
+      print('Platform: Web');
+      print('API Base URL: http://localhost:8080/api');
       return 'http://localhost:8080/api';
     }
 
     // Für Android Emulator: 10.0.2.2 statt localhost
-    // Für iOS Simulator/Desktop: localhost
     try {
       if (Platform.isAndroid) {
+        print('Platform: Android');
+        print('API Base URL: http://10.0.2.2:8080/api');
         return 'http://10.0.2.2:8080/api';
       }
     } catch (e) {
       // Platform.isAndroid wirft Exception bei Web
-      // Fallback zu localhost
+      // Fallback zu localhost für andere Plattformen
+      print('Error determining platform: $e');
     }
 
+    // Für macOS: 127.0.0.1 statt localhost
+    if (Platform.isMacOS) {
+      print('Platform: macOS');
+      print('API Base URL: http://localhost:8080/api');
+      return 'http://localhost:8080/api';
+    }
+
+    // Standard-Fallback für andere Plattformen
+    print('Platform: macOS/iOS/Desktop');
+    print('API Base URL: http://localhost:8080/api');
     return 'http://localhost:8080/api';
   }
 
@@ -48,8 +62,8 @@ class ApiConfig {
   };
 
   /// Timeouts
-  static const Duration connectTimeout = Duration(seconds: 5);
-  static const Duration receiveTimeout = Duration(seconds: 10);
+  static const Duration connectTimeout = Duration(seconds: 15);
+  static const Duration receiveTimeout = Duration(seconds: 30);
 
   /// Debug-Modus für detaillierte Logs
   static const bool debugMode = true;

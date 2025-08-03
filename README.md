@@ -167,6 +167,16 @@ API Endpoints
 | `GET` | `/api/expenses/stats/quarterly` | Quarterly statistics |
 | `GET` | `/api/expenses/stats/yearly` | Yearly statistics |
 
+### macOS Desktop App Notice
+
+> **Known Issue:**  
+> The macOS desktop version of this app does **not always work reliably on macOS**, especially when accessing the backend API over the network. This is a well-known limitation of Flutter Desktop on macOS.
+>
+> - **Web version:** The browser-based (Web) version of the app runs as expected on macOS and is recommended for use on this platform.
+> - **Workarounds:** There is currently no stable workaround for the desktop app on macOS. If you encounter issues, please use the Web version or run the app on Windows or Linux.
+> - **Status:** Support for the macOS desktop app will be improved as soon as the Flutter team provides a stable solution.
+
+
 
 ## Testing
 

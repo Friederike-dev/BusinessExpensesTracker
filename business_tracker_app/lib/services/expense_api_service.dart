@@ -5,6 +5,7 @@ import '../models/expense.dart';
 import '../models/quarterly_stats.dart';
 import '../models/yearly_stats.dart';
 import '../utils/api_config.dart';
+import 'dart:async';
 
 /**
  * API Exception - Custom exception for API-related errors
@@ -91,27 +92,80 @@ class ExpenseApiService {
         print('🔍 API Health Check: ${ApiConfig.health}');
       }
 
-      final response = await _client
-          .get(
-            Uri.parse(ApiConfig.health),
-            headers: ApiConfig.defaultHeaders,
-          )
-          .timeout(ApiConfig.connectTimeout);
+      // Debugging-Ausgabe für Timeout-Werte
+      print('Connect timeout: ${ApiConfig.connectTimeout}');
+      print('Receive timeout: ${ApiConfig.receiveTimeout}');
+      // Debugging-Ausgabe für HTTP-Header
+      print('Default headers: ${ApiConfig.defaultHeaders}');
+      // Debugging-Ausgabe vor dem API-Aufruf
+      print('Testing API connection: ${ApiConfig.health}');
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body) as Map<String, dynamic>;
-        if (ApiConfig.debugMode) {
-          print('✅ Health Check OK: ${data['message']}');
+      try {
+        print('Testing API connection: ${ApiConfig.health}');
+        final response = await _client
+            .get(
+              Uri.parse(ApiConfig.health),
+              headers: ApiConfig.defaultHeaders,
+            )
+            .timeout(ApiConfig.connectTimeout);
+
+        // Debugging-Ausgabe nach dem API-Aufruf
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+
+        if (response.statusCode == 200) {
+          final data = jsonDecode(response.body) as Map<String, dynamic>;
+          if (!data.containsKey('success') || data['success'] != true) {
+            print('❌ Invalid response structure: $data');
+            throw ApiException(
+                'Invalid response structure: success flag missing or false');
+          }
+          if (!data.containsKey('success') || data['success'] != true) {
+            throw ApiException(
+                'Invalid response structure: success flag missing or false');
+          }
+          if (ApiConfig.debugMode) {
+            print('✅ Health Check OK: ${data['message']}');
+            print('Full response: $data');
+          }
+          return data;
+        } else {
+          print(
+              '❌ Health Check failed with status code: ${response.statusCode}');
+          throw ApiException('Health check failed', response.statusCode);
         }
-        return data;
-      } else {
-        throw ApiException('Health check failed', response.statusCode);
+      } catch (e) {
+        print('Error during API call: $e');
+        if (e is SocketException) {
+          print('SocketException details: ${e.osError?.message}');
+          print('SocketException raw: $e');
+          print('Is the backend running? Check port accessibility.');
+          throw ApiException('No internet connection or server not running');
+        } else if (e is TimeoutException) {
+          print('TimeoutException occurred: $e');
+          print('Is the backend responding within the timeout period?');
+          throw ApiException('API request timed out');
+        } else {
+          print('Unknown error occurred during API call: $e');
+          throw ApiException('Health check failed: $e');
+        }
       }
     } on SocketException {
+      print('SocketException caught outside inner try-catch');
+      print('This might indicate a network issue or port blocking.');
       throw ApiException('No internet connection or server not running');
     } on FormatException {
+      print('FormatException caught outside inner try-catch');
+      print('The response format might be invalid or unexpected.');
       throw ApiException('Invalid response format');
     } catch (e) {
+      if (e is TimeoutException) {
+        print(
+            'TimeoutException: API-Antwort hat zu lange gedauert. Timeout-Werte überprüfen.');
+        throw ApiException('API request timed out');
+      }
+      print('Unknown error caught outside inner try-catch: $e');
+      print('This might be an unhandled exception.');
       throw ApiException('Health check failed: $e');
     }
   }
@@ -132,7 +186,17 @@ class ExpenseApiService {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body) as Map<String, dynamic>;
-
+        if (!responseData.containsKey('success') ||
+            responseData['success'] != true) {
+          print('❌ Invalid response structure: $responseData');
+          throw ApiException(
+              'Invalid response structure: success flag missing or false');
+        }
+        if (!responseData.containsKey('success') ||
+            responseData['success'] != true) {
+          throw ApiException(
+              'Invalid response structure: success flag missing or false');
+        }
         // Backend Response-Struktur: {"success": true, "data": [...], "message": "..."}
         if (responseData['success'] == true && responseData['data'] != null) {
           final List<dynamic> expensesJson =
@@ -154,9 +218,15 @@ class ExpenseApiService {
         throw ApiException('Failed to load expenses', response.statusCode);
       }
     } on SocketException {
+      print(
+          'SocketException: Backend möglicherweise nicht erreichbar. Ist der Server gestartet?');
       throw ApiException('No internet connection');
     } on FormatException {
       throw ApiException('Invalid response format');
+    } on TimeoutException {
+      print(
+          'TimeoutException: API-Antwort hat zu lange gedauert. Timeout-Werte überprüfen.');
+      throw ApiException('API request timed out');
     } catch (e) {
       throw ApiException('Failed to load expenses: $e');
     }
@@ -179,7 +249,17 @@ class ExpenseApiService {
 
       if (response.statusCode == 201) {
         final responseData = jsonDecode(response.body) as Map<String, dynamic>;
-
+        if (!responseData.containsKey('success') ||
+            responseData['success'] != true) {
+          print('❌ Invalid response structure: $responseData');
+          throw ApiException(
+              'Invalid response structure: success flag missing or false');
+        }
+        if (!responseData.containsKey('success') ||
+            responseData['success'] != true) {
+          throw ApiException(
+              'Invalid response structure: success flag missing or false');
+        }
         if (responseData['success'] == true && responseData['data'] != null) {
           final createdExpense =
               Expense.fromJson(responseData['data'] as Map<String, dynamic>);
@@ -198,6 +278,8 @@ class ExpenseApiService {
         throw ApiException(errorMessage, response.statusCode);
       }
     } on SocketException {
+      print(
+          'SocketException: Backend möglicherweise nicht erreichbar. Ist der Server gestartet?');
       throw ApiException('No internet connection');
     } on FormatException {
       throw ApiException('Invalid response format');
@@ -345,7 +427,11 @@ class ExpenseApiService {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body) as Map<String, dynamic>;
-
+        if (!responseData.containsKey('success') ||
+            responseData['success'] != true) {
+          throw ApiException(
+              'Invalid response structure: success flag missing or false');
+        }
         if (responseData['success'] == true && responseData['data'] != null) {
           if (ApiConfig.debugMode) {
             print('✅ Statistics loaded successfully');
@@ -384,7 +470,11 @@ class ExpenseApiService {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body) as Map<String, dynamic>;
-
+        if (!responseData.containsKey('success') ||
+            responseData['success'] != true) {
+          throw ApiException(
+              'Invalid response structure: success flag missing or false');
+        }
         if (responseData['success'] == true && responseData['data'] != null) {
           final quarterlyStats = QuarterlyStats.fromJson(
               responseData['data'] as Map<String, dynamic>);
@@ -427,7 +517,17 @@ class ExpenseApiService {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body) as Map<String, dynamic>;
-
+        if (!responseData.containsKey('success') ||
+            responseData['success'] != true) {
+          print('❌ Invalid response structure: $responseData');
+          throw ApiException(
+              'Invalid response structure: success flag missing or false');
+        }
+        if (!responseData.containsKey('success') ||
+            responseData['success'] != true) {
+          throw ApiException(
+              'Invalid response structure: success flag missing or false');
+        }
         if (responseData['success'] == true && responseData['data'] != null) {
           final yearlyStats = YearlyStats.fromJson(
               responseData['data'] as Map<String, dynamic>);
